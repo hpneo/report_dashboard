@@ -18,7 +18,7 @@ Charts.donut_data = function(data) {
       var brightness = 0.2 - (j / data[i].drilldown.data.length) / 5 ;
 
       donutData.extraData.push({
-        name: data[i].name + ' ' + data[i].drilldown.categories[j],
+        name: data[i].name + '<br/>' + data[i].drilldown.categories[j],
         y: data[i].drilldown.data[j],
         color: Highcharts.Color(Charts.colors[i]).brighten(brightness).get()
       });
@@ -43,12 +43,13 @@ Charts.createDonut = function(options) {
         allowPointSelect: true,
         cursor: 'pointer',
         dataLabels: {
-          enabled: true,
+          enabled: false,
           format: '<b>{point.name}</b>: {point.percentage:.1f} %',
           style: {
             color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
           }
-        }
+        },
+        showInLegend: true
       }
     },
     series: [
