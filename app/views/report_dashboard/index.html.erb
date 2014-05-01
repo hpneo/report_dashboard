@@ -1,6 +1,7 @@
-<h2>Report Dashboard</h2>
+<h2>Reporte total de peticiones</h2>
 
 <div class="chart" id="issues-by-tracker"></div>
+<div class="chart" id="issues-by-status"></div>
 <div class="chart" id="issues-by-priority"></div>
 
 <% content_for :header_tags do %>
@@ -17,6 +18,13 @@
       mainSeriesName: 'Peticiones',
       extraSeriesName: 'Peticiones',
       data: Charts.donut_data(<%= donut_data(@issues_by_tracker).to_json.html_safe %>)
+    });
+    Charts.createDonut({
+      selector: '#issues-by-status',
+      text: 'Peticiones por estado',
+      mainSeriesName: 'Peticiones',
+      extraSeriesName: 'Peticiones',
+      data: Charts.donut_data(<%= donut_data(@issues_by_status).to_json.html_safe %>)
     });
 
     Charts.createDonut({

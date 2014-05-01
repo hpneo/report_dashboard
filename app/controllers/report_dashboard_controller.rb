@@ -21,6 +21,11 @@ class ReportDashboardController < ApplicationController
       hash
     end
 
+    @issues_by_status = IssueReport.all_by(:status, @projects).inject({}) do |hash, (status_id, datum)|
+      hash[@statuses[status_id]] = datum
+      hash
+    end
+
     @issues_by_priority = IssueReport.all_by(:priority, @projects).inject({}) do |hash, (priority_id, datum)|
       hash[@priorities[priority_id]] = datum
       hash

@@ -1,3 +1,7 @@
+ActionDispatch::Callbacks.to_prepare do
+  require_dependency 'report_dashboard/issue_patch'
+end
+
 Redmine::Plugin.register :report_dashboard do
   name 'Report Dashboard plugin'
   author 'Gustavo Leon'
