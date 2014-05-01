@@ -1,0 +1,30 @@
+<h2>Report Dashboard</h2>
+
+<div class="chart" id="issues-by-tracker"></div>
+<div class="chart" id="issues-by-priority"></div>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'charts', :plugin => 'report_dashboard' %>
+  <%= javascript_include_tag 'highcharts', :plugin => 'report_dashboard' %>
+  <%= javascript_include_tag 'charts', :plugin => 'report_dashboard' %>
+<% end %>
+
+<script type="text/javascript">
+  $(function() {
+    Charts.createDonut({
+      selector: '#issues-by-tracker',
+      text: 'Peticiones por tipo',
+      mainSeriesName: 'Peticiones',
+      extraSeriesName: 'Peticiones',
+      data: Charts.donut_data(<%= donut_data(@issues_by_tracker).to_json.html_safe %>)
+    });
+
+    Charts.createDonut({
+      selector: '#issues-by-priority',
+      text: 'Peticiones por prioridad',
+      mainSeriesName: 'Peticiones',
+      extraSeriesName: 'Peticiones',
+      data: Charts.donut_data(<%= donut_data(@issues_by_priority).to_json.html_safe %>)
+    });
+  });
+</script>

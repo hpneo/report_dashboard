@@ -1,0 +1,5 @@
+= ReportDashboard plugin
+
+`RAILS_ENV=production ruby script/rails generate redmine_plugin ReportDashboard`
+
+`RAILS_ENV=production ruby script/rails generate redmine_plugin_controller ReportDashboard report_dashboard index`

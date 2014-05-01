@@ -1,0 +1,1 @@
+get 'report_dashboard', :to => 'report_dashboard#index'
