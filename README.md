@@ -56,3 +56,27 @@ trackers.each do |tracker|
   end
 end
 ```
+
+## Mock data for time entries (Capybara is required)
+
+```ruby
+require 'capybara'
+require 'capybara/rails'
+
+include Capybara::DSL
+visit('/login')
+
+fill_in('Login', with: 'admin')
+fill_in('Password', with: 'admin')
+click_button('Login')
+
+project = Project.find('proyecto-de-prueba')
+issues = project.issues
+
+issues.each do |issue|
+  visit("/issues/#{issue.id}/time_entries/new")
+  fill_in('Hours', with: Random.rand(1..10))
+  select('Desarrollo', from: 'Activity')
+  click_button('Create and continue')
+end
+```
