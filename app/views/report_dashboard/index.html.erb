@@ -4,6 +4,12 @@
 <div class="chart" id="issues-by-status"></div>
 <div class="chart" id="issues-by-priority"></div>
 
+<h2>Reporte por proyecto: <%= select_tag 'projects', options_from_collection_for_select(@projects, 'id', 'name') %></h2>
+
+<div class="chart" id="project-issues-by-tracker"></div>
+<div class="chart" id="project-issues-by-status"></div>
+<div class="chart" id="project-issues-by-priority"></div>
+
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag 'charts', :plugin => 'report_dashboard' %>
   <%= javascript_include_tag 'highcharts', :plugin => 'report_dashboard' %>
@@ -19,6 +25,7 @@
       extraSeriesName: 'Peticiones',
       data: Charts.donut_data(<%= donut_data(@issues_by_tracker).to_json.html_safe %>)
     });
+
     Charts.createDonut({
       selector: '#issues-by-status',
       text: 'Peticiones por estado',
@@ -33,6 +40,30 @@
       mainSeriesName: 'Peticiones',
       extraSeriesName: 'Peticiones',
       data: Charts.donut_data(<%= donut_data(@issues_by_priority).to_json.html_safe %>)
+    });
+
+    Charts.createDonut({
+      selector: '#project-issues-by-tracker',
+      text: 'Peticiones por tipo',
+      mainSeriesName: 'Peticiones',
+      extraSeriesName: 'Peticiones',
+      data: Charts.donut_data(<%= donut_data(@project_issues_by_tracker).to_json.html_safe %>)
+    });
+
+    Charts.createDonut({
+      selector: '#project-issues-by-status',
+      text: 'Peticiones por estado',
+      mainSeriesName: 'Peticiones',
+      extraSeriesName: 'Peticiones',
+      data: Charts.donut_data(<%= donut_data(@project_issues_by_status).to_json.html_safe %>)
+    });
+
+    Charts.createDonut({
+      selector: '#project-issues-by-priority',
+      text: 'Peticiones por prioridad',
+      mainSeriesName: 'Peticiones',
+      extraSeriesName: 'Peticiones',
+      data: Charts.donut_data(<%= donut_data(@project_issues_by_priority).to_json.html_safe %>)
     });
   });
 </script>

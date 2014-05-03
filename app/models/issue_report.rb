@@ -1,4 +1,23 @@
 class IssueReport
+  def self.by(field, project)
+    method = "by_#{field}".to_sym
+    id = "#{field}_id"
+    project_data = {}
+    data = Issue.send(method, project) || []
+
+    data.each do |datum|
+      datum["opened"] ||= datum["total"]
+
+      project_data[datum[id]] ||= {}
+      project_data[datum[id]]["opened"] ||= 0
+      project_data[datum[id]]["opened"] += datum["opened"]
+      project_data[datum[id]]["closed"] ||= 0
+      project_data[datum[id]]["closed"] += datum["closed"]
+      project_data[datum[id]]["total"] = datum["opened"] + datum["closed"]
+    end
+
+    project_data
+  end
   def self.all_by(field, projects = Project.all)
     method = "by_#{field}".to_sym
     id = "#{field}_id"
