@@ -1,10 +1,12 @@
-= ReportDashboard plugin
+# ReportDashboard plugin
+
+## Creation steps
 
 `RAILS_ENV=production ruby script/rails generate redmine_plugin ReportDashboard`
 
 `RAILS_ENV=production ruby script/rails generate redmine_plugin_controller ReportDashboard report_dashboard index`
 
-= Mock data for issues (Capybara is required)
+## Mock data for issues (Capybara is required)
 
 ```ruby
 require 'capybara'
