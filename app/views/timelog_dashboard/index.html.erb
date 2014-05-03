@@ -1,0 +1,5 @@
+<h2>Log total de horas</h2>
+
+<% @users.each do |user| %>
+  <h3><%= user.name %>: <%= TimeEntry.where(user_id: user.id).sum(:hours) %> horas</h3>
+<% end %>

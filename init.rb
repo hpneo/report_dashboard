@@ -12,4 +12,5 @@ Redmine::Plugin.register :report_dashboard do
 
   permission :view_report_dashboard, :report_dashboard => :index
   menu :top_menu, :report_dashboard, { :controller => 'report_dashboard', :action => 'index' }, :caption => 'Report Dashboard'
+  menu :top_menu, :timelog_dashboard, { :controller => 'timelog_dashboard', :action => 'index' }, :caption => 'Timelog Dashboard'
 end
