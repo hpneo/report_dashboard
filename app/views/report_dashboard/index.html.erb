@@ -42,7 +42,7 @@
       data: Charts.donut_data(<%= donut_data(@issues_by_priority).to_json.html_safe %>)
     });
 
-    Charts.createDonut({
+    Charts.projectIssuesByTracker = Charts.createDonut({
       selector: '#project-issues-by-tracker',
       text: 'Peticiones por tipo',
       mainSeriesName: 'Peticiones',
@@ -50,7 +50,7 @@
       data: Charts.donut_data(<%= donut_data(@project_issues_by_tracker).to_json.html_safe %>)
     });
 
-    Charts.createDonut({
+    Charts.projectIssuesByStatus = Charts.createDonut({
       selector: '#project-issues-by-status',
       text: 'Peticiones por estado',
       mainSeriesName: 'Peticiones',
@@ -58,12 +58,36 @@
       data: Charts.donut_data(<%= donut_data(@project_issues_by_status).to_json.html_safe %>)
     });
 
-    Charts.createDonut({
+    Charts.projectIssuesByPriority = Charts.createDonut({
       selector: '#project-issues-by-priority',
       text: 'Peticiones por prioridad',
       mainSeriesName: 'Peticiones',
       extraSeriesName: 'Peticiones',
       data: Charts.donut_data(<%= donut_data(@project_issues_by_priority).to_json.html_safe %>)
+    });
+
+    $('#projects').on('change', function() {
+      var id = $(this).val();
+
+      var request = $.get('/report_dashboard/' + id);
+      request.done(function(data) {
+        console.log(data);
+        data.project_issues_by_tracker = Charts.donut_data(data.project_issues_by_tracker);
+        data.project_issues_by_status = Charts.donut_data(data.project_issues_by_status);
+        data.project_issues_by_priority = Charts.donut_data(data.project_issues_by_priority);
+
+        Charts.projectIssuesByTracker.series[0].setData(data.project_issues_by_tracker.mainData);
+        Charts.projectIssuesByTracker.series[1].setData(data.project_issues_by_tracker.extraData);
+        Charts.projectIssuesByTracker.redraw();
+
+        Charts.projectIssuesByStatus.series[0].setData(data.project_issues_by_status.mainData);
+        Charts.projectIssuesByStatus.series[1].setData(data.project_issues_by_status.extraData);
+        Charts.projectIssuesByStatus.redraw();
+
+        Charts.projectIssuesByPriority.series[0].setData(data.project_issues_by_priority.mainData);
+        Charts.projectIssuesByPriority.series[1].setData(data.project_issues_by_priority.extraData);
+        Charts.projectIssuesByPriority.redraw();
+      });
     });
   });
 </script>

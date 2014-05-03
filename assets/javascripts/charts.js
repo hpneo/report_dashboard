@@ -29,7 +29,7 @@ Charts.donut_data = function(data) {
 };
 
 Charts.createDonut = function(options) {
-  $(options.selector).highcharts({
+  return $(options.selector).highcharts({
     chart: {
       type: 'pie'
     },
@@ -77,5 +77,5 @@ Charts.createDonut = function(options) {
         }
       }
     ]
-  });
+  }).highcharts();
 };
