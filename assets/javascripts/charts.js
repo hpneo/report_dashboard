@@ -1,5 +1,5 @@
 var Charts = Charts || {};
-Charts.colors = ['#27ae60', '#2980b9', '#8e44ad', '#2c3e50', '#d35400', '#c0392b', '#16a085', '#f39c12'];
+Charts.colors = ['#27ae60', '#2980b9', '#8e44ad', '#d35400', '#c0392b', '#16a085', '#f39c12'];
 
 Charts.donut_data = function(data) {
   var donutData = {

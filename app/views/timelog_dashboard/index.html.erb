@@ -1,5 +1,29 @@
 <h2>Log total de horas</h2>
 
 <% @users.each do |user| %>
-  <h3><%= user.name %>: <%= TimeEntry.where(user_id: user.id).sum(:hours) %> horas</h3>
+  <h3><%= user.name %></h3>
+  <table class="list">
+    <thead>
+      <th>Proyecto</th>
+      <th>Horas</th>
+    </thead>
+    <tbody>
+      <% @time_entries[user.id].each do |project_id, hours| %>
+        <tr>
+          <td class="subject"><%= @projects[project_id].name %></td>
+          <td><%= hours %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr class="odd">
+        <td class="subject">Total</td>
+        <td><%= @time_entries[user.id].values.sum %></td>
+      </tr>
+    </tfoot>
+  </table>
+<% end %>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'charts', :plugin => 'report_dashboard' %>
 <% end %>
