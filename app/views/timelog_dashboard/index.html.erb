@@ -10,14 +10,14 @@
     <tbody>
       <% @time_entries[user.id].each do |project_id, hours| %>
         <tr>
-          <td class="subject"><%= @projects[project_id].name %></td>
-          <td><%= hours %></td>
+          <td class="subject"><%= link_to @projects[project_id].name, project_path(@projects[project_id]), target: 'blank' %></td>
+          <td><%= link_to hours, report_project_time_entries_path(@projects[project_id]) %></td>
         </tr>
       <% end %>
     </tbody>
     <tfoot>
       <tr class="odd">
-        <td class="subject">Total</td>
+        <td>Total</td>
         <td><%= @time_entries[user.id].values.sum %></td>
       </tr>
     </tfoot>
