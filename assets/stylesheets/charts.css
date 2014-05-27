@@ -1,10 +1,31 @@
 .chart {
   display: inline-block;
-  width: 32%;
   height: 600px;
+  vertical-align: top;
+  margin-top: 40px;
+}
+
+.three-column-row .chart {
+  width: 32%;
   margin-right: 1%;
+}
+
+.two-column-row .chart {
+  width: 45%;
+  margin-right: 1%;
+}
+
+.chart h3 {
+  font-size: 1.5em;
+  font-weight: normal;
+  color: #484848;
+  text-align: center;
 }
 
 table.list {
   width: 50%;
+}
+
+.two-column-row table.list {
+  width: 100%;
 }

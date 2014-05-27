@@ -19,7 +19,7 @@ fill_in('Login', with: 'admin')
 fill_in('Password', with: 'admin')
 click_button('Login')
 
-visit('/projects/proyecto-de-prueba/issues/new')
+visit('/projects/proyecto-de-prueba-8/issues/new')
 
 trackers = [
   "Errores",
@@ -45,13 +45,19 @@ priorities = [
 ]
 
 trackers.each do |tracker|
-  statuses.each do |status|
-    priorities.each do |priority|
-      select(tracker, from: 'Tracker')
-      fill_in('Subject', with: "#{tracker} #{status} con prioridad #{priority}")
-      select(status, from: 'Status')
-      select(priority, from: 'Priority')
-      click_button('Create and continue')
+  if Random.rand(1..100) > 50
+    statuses.each do |status|
+      if Random.rand(1..100) > 50
+        priorities.each do |priority|
+          if Random.rand(1..100) > 50
+            select(tracker, from: 'Tracker')
+            fill_in('Subject', with: "#{tracker} #{status} con prioridad #{priority}")
+            select(status, from: 'Status')
+            select(priority, from: 'Priority')
+            click_button('Create and continue')
+          end
+        end
+      end
     end
   end
 end

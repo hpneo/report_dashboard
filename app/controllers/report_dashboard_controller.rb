@@ -10,6 +10,15 @@ class ReportDashboardController < ApplicationController
     @company = Company.new(params[:company_id])
     @projects = @company.projects
 
+    @issues_by_tracker_by_project = @projects.inject({}) do |project_hash, project|
+      project_hash[project] = IssueReport.by(:tracker, project).inject({}) do |hash, (tracker_id, datum)|
+        hash[@trackers[tracker_id]] = datum
+        hash
+      end
+
+      project_hash
+    end
+
     @issues_by_tracker = IssueReport.all_by(:tracker, @projects).inject({}) do |hash, (tracker_id, datum)|
       hash[@trackers[tracker_id]] = datum
       hash
@@ -35,10 +44,12 @@ class ReportDashboardController < ApplicationController
       hash[@trackers[tracker_id]] = datum
       hash
     end
+
     @issues_by_status = IssueReport.by(:status, project).inject({}) do |hash, (status_id, datum)|
       hash[@statuses[status_id]] = datum
       hash
     end
+
     @issues_by_priority = IssueReport.by(:priority, project).inject({}) do |hash, (priority_id, datum)|
       hash[@priorities[priority_id]] = datum
       hash

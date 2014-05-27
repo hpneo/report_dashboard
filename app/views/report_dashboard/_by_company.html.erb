@@ -1,6 +1,42 @@
-<div class="chart" id="issues-by-tracker"></div>
-<div class="chart" id="issues-by-status"></div>
-<div class="chart" id="issues-by-priority"></div>
+<div class="three-column-row">
+  <div class="chart" id="issues-by-tracker"></div>
+  <div class="chart" id="issues-by-status"></div>
+  <div class="chart" id="issues-by-priority"></div>
+</div>
+<div class="two-column-row">
+  <div class="chart">
+    <h3>Tabla</h3>
+    <table class="list">
+      <thead>
+        <tr>
+          <th>Proyecto</th>
+          <th>Bugs (Open)</th>
+          <th>Bugs (Closed)</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @issues_by_tracker_by_project.each do |project, issues| %>
+          <tr>
+            <td>
+              <%= project.name %>
+            </td>
+            <td>
+              <%= (issues['Errores'] || {})['opened'].to_i %>
+            </td>
+            <td>
+              <%= (issues['Errores'] || {})['closed'].to_i %>
+            </td>
+            <td>
+              <%= (issues['Errores'] || {})['total'].to_i %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="chart" id="timelog"></div>
+</div>
 
 <script type="text/javascript">
   $(function() {
