@@ -17,4 +17,12 @@ module ReportDashboardHelper
 
     data
   end
+
+  def project_values
+    @project_values ||= Project.select('name, identifier').map{ |p| [p.name, p.identifier] }
+  end
+
+  def company_values
+    @company_values ||= ProjectCustomField.where(name: 'Empresa').first.possible_values
+  end
 end

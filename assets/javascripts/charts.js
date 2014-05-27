@@ -10,9 +10,9 @@ Charts.colors = [
   '#367ca3',
   '#7aaf3d',
   '#e3b802',
-  '#ec9f2e',
   '#ce222b',
-  '#55136b'
+  '#55136b',
+  '#ec9f2e'
   // '#275677',
   // '#5a8a2c',
   // '#c1951e',
@@ -80,6 +80,10 @@ Charts.createDonut = function(options) {
         },
         showInLegend: true
       }
+    },
+    legend: {
+      itemWidth: 105,
+      symbolRadius: 1
     },
     series: [
       {

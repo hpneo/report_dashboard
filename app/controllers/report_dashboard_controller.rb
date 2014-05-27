@@ -6,8 +6,9 @@ class ReportDashboardController < ApplicationController
 
   before_filter :load_fields
 
-  def index
-    @projects = Project.all
+  def by_company
+    @company = Company.new(params[:company_id])
+    @projects = @company.projects
 
     @issues_by_tracker = IssueReport.all_by(:tracker, @projects).inject({}) do |hash, (tracker_id, datum)|
       hash[@trackers[tracker_id]] = datum
@@ -24,41 +25,31 @@ class ReportDashboardController < ApplicationController
       hash
     end
 
-    @project_issues_by_tracker = IssueReport.by(:tracker, @projects.first).inject({}) do |hash, (tracker_id, datum)|
-      hash[@trackers[tracker_id]] = datum
-      hash
-    end
-    @project_issues_by_status = IssueReport.by(:status, @projects.first).inject({}) do |hash, (status_id, datum)|
-      hash[@statuses[status_id]] = datum
-      hash
-    end
-    @project_issues_by_priority = IssueReport.by(:priority, @projects.first).inject({}) do |hash, (priority_id, datum)|
-      hash[@priorities[priority_id]] = datum
-      hash
-    end
+    render partial: 'report_dashboard/by_company', layout: false if params[:layout].present?
   end
 
-  def show
-    @project = Project.find(params[:project_id])
+  def by_project
+    project = Project.find(params[:project_id])
 
-    @project_issues_by_tracker = IssueReport.by(:tracker, @project).inject({}) do |hash, (tracker_id, datum)|
+    @issues_by_tracker = IssueReport.by(:tracker, project).inject({}) do |hash, (tracker_id, datum)|
       hash[@trackers[tracker_id]] = datum
       hash
     end
-    @project_issues_by_status = IssueReport.by(:status, @project).inject({}) do |hash, (status_id, datum)|
+    @issues_by_status = IssueReport.by(:status, project).inject({}) do |hash, (status_id, datum)|
       hash[@statuses[status_id]] = datum
       hash
     end
-    @project_issues_by_priority = IssueReport.by(:priority, @project).inject({}) do |hash, (priority_id, datum)|
+    @issues_by_priority = IssueReport.by(:priority, project).inject({}) do |hash, (priority_id, datum)|
       hash[@priorities[priority_id]] = datum
       hash
     end
 
-    render json: {
-      project_issues_by_tracker: donut_data(@project_issues_by_tracker),
-      project_issues_by_status: donut_data(@project_issues_by_status),
-      project_issues_by_priority: donut_data(@project_issues_by_priority)
-    }
+    render partial: 'report_dashboard/by_project', layout: false if params[:layout].present?
+  end
+
+  def index
+    params[:company_id] ||= company_values.first
+    by_company
   end
 
   private

@@ -1,0 +1,36 @@
+#filter_nav {
+  display: block;
+  width: 100%;
+  height: 55px;
+  overflow: visible;
+}
+
+#filter_nav p {
+  display: block;
+}
+
+#filter_nav .left {
+  float: left;
+}
+
+#filter_nav .right {
+  float: right;
+}
+
+#filter_nav label,
+#filter_nav input,
+#filter_nav select {
+  font-size: 1.5em;
+  vertical-align: middle;
+  outline: none;
+  padding: 2px;
+}
+
+#filter_by_value {
+  width: 350px;
+}
+
+#filter_nav select {
+  background: #ffffff;
+  padding: 2px 12px;
+}
