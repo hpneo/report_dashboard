@@ -35,7 +35,11 @@
       </tbody>
     </table>
   </div>
-  <div class="chart" id="timelog"></div>
+  <div class="chart" id="timelog">
+    <%= debug @history_opened %>
+    <hr>
+    <%= debug @history_closed %>
+  </div>
 </div>
 
 <script type="text/javascript">

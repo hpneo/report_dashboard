@@ -5,6 +5,10 @@
   margin-top: 40px;
 }
 
+.chart#issues-by-tracker {
+  height: 530px;
+}
+
 .three-column-row .chart {
   width: 32%;
   margin-right: 1%;

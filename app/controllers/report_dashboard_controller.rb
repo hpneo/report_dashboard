@@ -34,6 +34,9 @@ class ReportDashboardController < ApplicationController
       hash
     end
 
+    @history_opened = IssueReport.history(@projects, :opened)
+    @history_closed = IssueReport.history(@projects, :closed)
+
     render partial: 'report_dashboard/by_company', layout: false if params[:layout].present?
   end
 
