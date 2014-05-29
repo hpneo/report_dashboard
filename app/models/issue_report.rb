@@ -40,27 +40,4 @@ class IssueReport
 
     global_data
   end
-
-  def self.history(projects = Project.all, opened_or_closed = :opened)
-    projects.map do |project|
-      project_history(project, opened_or_closed)
-    end
-  end
-
-  def self.project_history(project, opened_or_closed = :opened)
-    if opened_or_closed == :opened
-      statuses = IssueStatus.where(is_closed: false).pluck(:id)
-      date = 'created_on'
-    else
-      statuses = IssueStatus.where(is_closed: true).pluck(:id)
-      date = 'closed_on'
-    end
-
-    project.issues.where(status_id: statuses).count(group: ['tracker_id', "date(#{date})"]).inject({}) do |hash, (key, value)|
-      hash[key[0]] ||= {}
-      hash[key[0]][key[1]] = value
-
-      hash
-    end
-  end
 end

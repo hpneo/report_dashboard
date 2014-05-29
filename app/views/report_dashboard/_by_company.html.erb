@@ -1,44 +1,55 @@
 <div class="three-column-row">
-  <div class="chart" id="issues-by-tracker"></div>
-  <div class="chart" id="issues-by-status"></div>
-  <div class="chart" id="issues-by-priority"></div>
+  <div class="chart-container">
+    <h3>Peticiones por tipo</h3>
+    <div class="chart" id="issues-by-tracker"></div>
+  </div>
+  <div class="chart-container">
+    <h3>Peticiones por estado</h3>
+    <div class="chart" id="issues-by-status"></div>
+  </div>
+  <div class="chart-container">
+    <h3>Peticiones por prioridad</h3>
+    <div class="chart" id="issues-by-priority"></div>
+  </div>
 </div>
 <div class="two-column-row">
-  <div class="chart">
+  <div class="chart-container">
     <h3>Tabla</h3>
-    <table class="list">
-      <thead>
-        <tr>
-          <th>Proyecto</th>
-          <th>Bugs (Open)</th>
-          <th>Bugs (Closed)</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @issues_by_tracker_by_project.each do |project, issues| %>
+    <div class="chart">
+      <table class="list">
+        <thead>
           <tr>
-            <td>
-              <%= project.name %>
-            </td>
-            <td>
-              <%= (issues['Errores'] || {})['opened'].to_i %>
-            </td>
-            <td>
-              <%= (issues['Errores'] || {})['closed'].to_i %>
-            </td>
-            <td>
-              <%= (issues['Errores'] || {})['total'].to_i %>
-            </td>
+            <th>Proyecto</th>
+            <th>Bugs (Open)</th>
+            <th>Bugs (Closed)</th>
+            <th>Total</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @issues_by_tracker_by_project.each do |project, issues| %>
+            <tr>
+              <td>
+                <%= project.name %>
+              </td>
+              <td>
+                <%= (issues['Errores'] || {})['opened'].to_i %>
+              </td>
+              <td>
+                <%= (issues['Errores'] || {})['closed'].to_i %>
+              </td>
+              <td>
+                <%= (issues['Errores'] || {})['total'].to_i %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <div class="chart" id="timelog">
-    <%= debug @history_opened %>
-    <hr>
-    <%= debug @history_closed %>
+  <div class="chart-container">
+    <h3>Histórico de peticiones</h3>
+    <div class="chart" id="history">
+    </div>
   </div>
 </div>
 
@@ -66,6 +77,14 @@
       mainSeriesName: 'Peticiones',
       extraSeriesName: 'Peticiones',
       data: Charts.donut_data(<%= donut_data(@issues_by_priority).to_json.html_safe %>)
+    });
+
+    Charts.createLine({
+      selector: '#history',
+      text: 'Histórico de peticiones',
+      categories: <%= line_categories(@history).to_json.html_safe %>,
+      y: 'Número de peticiones',
+      data: <%= line_data(@history).to_json.html_safe %>
     });
   });
 </script>

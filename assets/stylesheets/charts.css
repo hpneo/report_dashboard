@@ -1,25 +1,50 @@
-.chart {
+.chart-container {
   display: inline-block;
   height: 600px;
   vertical-align: top;
-  margin-top: 40px;
+  margin-bottom: 40px;
+  border: solid 2px #367ca3;
+  border-radius: 3px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.chart {
+  height: 570px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 .chart#issues-by-tracker {
-  height: 530px;
+  height: 500px;
 }
 
-.three-column-row .chart {
+.chart#issues-by-status {
+  height: 560px;
+}
+
+.chart#issues-by-priority {
+  height: 560px;
+}
+
+.three-column-row .chart-container {
   width: 32%;
   margin-right: 1%;
 }
 
-.two-column-row .chart {
-  width: 45%;
+.two-column-row .chart-container {
+  width: 48%;
   margin-right: 1%;
+  height: 440px;
 }
 
-.chart h3 {
+.two-column-row .chart {
+  height: 400px;
+}
+
+.chart-container h3 {
   font-size: 1.5em;
   font-weight: normal;
   color: #484848;

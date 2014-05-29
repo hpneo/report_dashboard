@@ -18,6 +18,25 @@ module ReportDashboardHelper
     data
   end
 
+  def line_categories(history)
+    history[:keys]
+  end
+
+  def line_data(history)
+    data = []
+
+    history[:data].each do |label, history_item|
+      datum = {
+        name: label,
+        data: history_item.values
+      }
+
+      data << datum
+    end
+
+    data
+  end
+
   def project_values
     @project_values ||= Project.select('name, identifier').map{ |p| [p.name, p.identifier] }
   end

@@ -34,27 +34,32 @@ class ReportDashboardController < ApplicationController
       hash
     end
 
-    @history_opened = IssueReport.history(@projects, :opened)
-    @history_closed = IssueReport.history(@projects, :closed)
+    @history = History.all(@projects)
 
     render partial: 'report_dashboard/by_company', layout: false if params[:layout].present?
   end
 
   def by_project
-    project = Project.find(params[:project_id])
+    @project = Project.find(params[:project_id])
+    @users = @project.users
 
-    @issues_by_tracker = IssueReport.by(:tracker, project).inject({}) do |hash, (tracker_id, datum)|
+    @issues_by_tracker = IssueReport.by(:tracker, @project).inject({}) do |hash, (tracker_id, datum)|
       hash[@trackers[tracker_id]] = datum
       hash
     end
 
-    @issues_by_status = IssueReport.by(:status, project).inject({}) do |hash, (status_id, datum)|
+    @issues_by_status = IssueReport.by(:status, @project).inject({}) do |hash, (status_id, datum)|
       hash[@statuses[status_id]] = datum
       hash
     end
 
-    @issues_by_priority = IssueReport.by(:priority, project).inject({}) do |hash, (priority_id, datum)|
+    @issues_by_priority = IssueReport.by(:priority, @project).inject({}) do |hash, (priority_id, datum)|
       hash[@priorities[priority_id]] = datum
+      hash
+    end
+
+    @time_entries = @users.inject({}) do |hash, user|
+      hash[user.id] = TimeEntry.where(user_id: user.id, project_id: @project.id).sum(:hours)
       hash
     end
 

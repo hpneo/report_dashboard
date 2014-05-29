@@ -61,7 +61,7 @@ Charts.createDonut = function(options) {
       type: 'pie'
     },
     title: {
-      text: options.text
+      text: null
     },
     plotOptions: {
       pie: {
@@ -110,5 +110,27 @@ Charts.createDonut = function(options) {
         }
       }
     ]
+  }).highcharts();
+};
+
+Charts.createLine = function(options) {
+  return $(options.selector).highcharts({
+    title: {
+      text: null
+    },
+    xAxis: {
+      categories: options.categories
+    },
+    yAxis: {
+      title: {
+        text: options.y
+      },
+      plotLines: [{
+        value: 0,
+        width: 1,
+        color: '#808080'
+      }]
+    },
+    series: options.data
   }).highcharts();
 };
