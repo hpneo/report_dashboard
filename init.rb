@@ -10,7 +10,6 @@ Redmine::Plugin.register :report_dashboard do
   url 'http://github.com/hpneo/report_dashboard'
   author_url 'http://hpneo.github.io'
 
-  permission :view_report_dashboard, :report_dashboard => :index
-  menu :top_menu, :report_dashboard, { :controller => 'report_dashboard', :action => 'index' }, :caption => 'Dashboard'
-  menu :top_menu, :timelog_dashboard, { :controller => 'timelog_dashboard', :action => 'index' }, :caption => 'Timelog Dashboard'
+  permission :view_report_dashboard, report_dashboard: :index
+  menu :top_menu, :report_dashboard, { controller: 'report_dashboard', action: 'index' }, caption: 'Dashboard', if: Proc.new { User.current.allowed_to?(:view_report_dashboard, nil, global: true) }
 end

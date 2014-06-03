@@ -5,6 +5,7 @@ class ReportDashboardController < ApplicationController
   unloadable
 
   before_filter :load_fields
+  before_filter :check_permissions
 
   def by_company
     @company = Company.new(params[:company_id])
@@ -86,5 +87,9 @@ class ReportDashboardController < ApplicationController
       hash[tracker.id] = tracker.name
       hash
     end
+  end
+  
+  def check_permissions
+    (render_403; return false) unless User.current.allowed_to?(:view_report_dashboard, nil, global: true)
   end
 end
