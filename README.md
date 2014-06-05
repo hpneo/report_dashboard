@@ -24,7 +24,8 @@ visit('/projects/proyecto-de-prueba-8/issues/new')
 trackers = [
   "Errores",
   "Tareas",
-  "Soporte"
+  "Soporte",
+  "Tracker caprichoso"
 ]
 
 statuses = [

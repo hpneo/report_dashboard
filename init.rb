@@ -6,7 +6,7 @@ Redmine::Plugin.register :report_dashboard do
   name 'Report Dashboard plugin'
   author 'Gustavo Leon'
   description 'Global report dashboard for Redmine'
-  version '0.1.0'
+  version '1.0.0'
   url 'http://github.com/hpneo/report_dashboard'
   author_url 'http://hpneo.github.io'
 
