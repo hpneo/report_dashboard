@@ -5,13 +5,24 @@ class IssueReport
     project_data = {}
     data = Issue.send(method, project) || []
 
-    data.each do |datum|
-      project_data[datum[id]] ||= {}
-      project_data[datum[id]]["total"] ||= 0
-      project_data[datum[id]]["total"] += datum["total"].to_i
-      project_data[datum[id]]["closed"] ||= 0
-      project_data[datum[id]]["closed"] += datum["closed"].to_i
-      project_data[datum[id]]["opened"] = project_data[datum[id]]["total"] - project_data[datum[id]]["closed"]
+    grouped_data = data.group_by{|d| d[id] }
+
+    grouped_data.each do |key, grouped_datum|
+      project_data[key] ||= {}
+
+      grouped_datum.each do |datum|
+        if datum["closed"] == 1
+          project_data[key]["closed"] ||= 0
+          project_data[key]["closed"] += datum["total"]
+        else
+          project_data[key]["opened"] ||= 0
+          project_data[key]["opened"] += datum["total"]
+        end
+      end
+
+      project_data[key]["closed"] ||= 0
+      project_data[key]["opened"] ||= 0
+      project_data[key]["total"] = project_data[key]["closed"] + project_data[key]["opened"]
     end
 
     project_data
@@ -24,14 +35,24 @@ class IssueReport
 
     projects.each do |project|
       project_data = Issue.send(method, project) || []
+      grouped_project_data = project_data.group_by{|d| d[id] }
 
-      project_data.each do |project_datum|
-        global_data[project_datum[id]] ||= {}
-        global_data[project_datum[id]]["total"] ||= 0
-        global_data[project_datum[id]]["total"] += project_datum["total"].to_i
-        global_data[project_datum[id]]["closed"] ||= 0
-        global_data[project_datum[id]]["closed"] += project_datum["closed"].to_i
-        global_data[project_datum[id]]["opened"] = global_data[project_datum[id]]["total"] - global_data[project_datum[id]]["closed"]
+      grouped_project_data.each do |key, grouped_datum|
+        global_data[key] ||= {}
+
+        grouped_datum.each do |datum|
+          if datum["closed"] == 1
+            global_data[key]["closed"] ||= 0
+            global_data[key]["closed"] += datum["total"]
+          else
+            global_data[key]["opened"] ||= 0
+            global_data[key]["opened"] += datum["total"]
+          end
+        end
+
+        global_data[key]["closed"] ||= 0
+        global_data[key]["opened"] ||= 0
+        global_data[key]["total"] = global_data[key]["closed"] + global_data[key]["opened"]
       end
     end
 
