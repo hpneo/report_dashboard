@@ -32,13 +32,13 @@
                 <%= project.name %>
               </td>
               <td>
-                <%= (issues['Errores'] || {})['opened'].to_i %>
+                <%= (issues['Errores'] || issues['Bug'] || {})['opened'].to_i %>
               </td>
               <td>
-                <%= (issues['Errores'] || {})['closed'].to_i %>
+                <%= (issues['Errores'] || issues['Bug'] || {})['closed'].to_i %>
               </td>
               <td>
-                <%= (issues['Errores'] || {})['total'].to_i %>
+                <%= (issues['Errores'] || issues['Bug'] || {})['total'].to_i %>
               </td>
             </tr>
           <% end %>
