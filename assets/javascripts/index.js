@@ -31,21 +31,24 @@ $(document).on('ready', function() {
   Filter.ui.by_type.change(function() {
     Filter.by_type = $(this).val();
     Filter.by_value = '';
-    var newValues = '<option value=""></option>';
+    var newValues = '<option value=""></option>',
+        placeholder;
 
     switch(Filter.by_type) {
       case 'company':
         newValues += $.map(Filter.companies, function(item) {
           return '<option value="' + item + '">' + item + '</option>';
         }).join('');
+        placeholder = 'Ingrese el nombre de la empresa';
       break;
       case 'project':
         newValues += $.map(Filter.projects, function(item) {
           return '<option value="' + item[1] + '">' + item[0] + '</option>';
         }).join('');
+        placeholder = 'Ingrese el nombre del proyecto';
       break;
     }
 
-    Filter.ui.by_value.html(newValues).trigger('chosen:updated');
+    Filter.ui.by_value.attr('data-placeholder', placeholder).html(newValues).trigger('chosen:updated');
   });
 });
