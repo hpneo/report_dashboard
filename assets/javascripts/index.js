@@ -22,7 +22,7 @@ $(document).on('ready', function() {
     data[Filter.by_type + '_id'] = Filter.by_value;
 
     if (Filter.by_type !== '' && Filter.by_value !== '') {
-      $.get('/dashboard/by_' + Filter.by_type, data).done(function(response) {
+      $.get('dashboard/by_' + Filter.by_type, data).done(function(response) {
         $('#charts_container').html(response);
       });
     }
