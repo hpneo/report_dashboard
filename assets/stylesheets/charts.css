@@ -30,6 +30,8 @@
 }
 
 .three-column-row {
+  display: block;
+  width: 100%;
   overflow: hidden;
 }
 
